@@ -4,9 +4,7 @@ import { createServer, Model } from "miragejs";
 import { App } from "./App";
 
 createServer({
-  models: {
-    transaction: Model,
-  },
+  models: { transaction: Model },
   routes() {
     this.namespace = "api";
     this.get("/transactions", () => {
