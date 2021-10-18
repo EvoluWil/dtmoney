@@ -17,7 +17,7 @@ This applications is an personal finance manager.
 <br/>
 <br/>
 <div align="center" id="top"> 
-  <img src="./src/assets/ModalPic" alt="02 Dtmoney" />
+  <img src="./src/assets/ModalPic.png" alt="02 Dtmoney" />
 </div>
 
 ## Features
