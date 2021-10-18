@@ -4,7 +4,7 @@ import incomeImg from "../../../assets/income.svg";
 import outcomeImg from "../../../assets/outcome.svg";
 import Modal from "react-modal";
 import { FormEvent, useState } from "react";
-import { api } from "../../../services/serviceApi";
+import { useTransactions } from "../../../hooks/useTransactions";
 
 interface HeaderProps {
   isOpen: boolean;
@@ -15,22 +15,30 @@ export const NewTrasactionModal: React.FC<HeaderProps> = ({
   isOpen,
   onRequestClose,
 }) => {
+  const { createTransaction } = useTransactions();
+
   const [data, setData] = useState<{
     title: string;
-    value: number;
+    amount: number;
     category: string;
     type: "deposit" | "withdraw";
   }>({
     title: "",
-    value: 0,
+    amount: 0,
     category: "",
     type: "deposit",
   });
 
-  const handleCreateNewTrasaction = (event: FormEvent) => {
+  const handleCreateNewTrasaction = async (event: FormEvent) => {
     event.preventDefault();
-
-    api.post("/transactions", data);
+    await createTransaction(data);
+    setData({
+      title: "",
+      amount: 0,
+      category: "",
+      type: "deposit",
+    });
+    onRequestClose();
   };
 
   return (
@@ -61,9 +69,9 @@ export const NewTrasactionModal: React.FC<HeaderProps> = ({
         <input
           type="number"
           placeholder="Valor"
-          value={data.value}
+          value={data.amount}
           onChange={(event) =>
-            setData({ ...data, value: Number(event.target.value) })
+            setData({ ...data, amount: Number(event.target.value) })
           }
         />
 
